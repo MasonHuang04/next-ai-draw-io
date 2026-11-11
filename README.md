@@ -21,6 +21,10 @@ Describe a diagram in a sentence and the AI draws it on a real draw.io canvas. E
 
 Available as a web app, a desktop app for Windows, macOS and Linux, and an MCP server for AI agents such as Claude Code, Cursor and VS Code.
 
+## Optional local Codex integration (fork branch)
+
+This branch adds a localhost Codex compatibility endpoint and an optional drawing workbench with recent conversations. See [setup and data-flow documentation](integrations/codex-workbench/README.md) or [中文说明](integrations/codex-workbench/README.zh-CN.md). Local login state, conversation records and screenshots are excluded from the source addition.
+
 ## Highlights
 
 **Draw**

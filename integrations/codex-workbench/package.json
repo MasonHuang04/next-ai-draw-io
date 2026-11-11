@@ -1,0 +1,20 @@
+{
+    "name": "drawio-codex-workbench",
+    "version": "0.2.0",
+    "private": true,
+    "description": "A local draw.io workbench sharing real Codex Desktop conversations",
+    "main": "electron-main.cjs",
+    "scripts": {
+        "start": "python launch_workbench.py",
+        "restart-service": "python restart_service.py",
+        "bridge": "python compatibility_bridge.py",
+        "bridge:info": "python compatibility_bridge.py --connection-info",
+        "test": "python -m unittest discover -s tests -p test_*.py",
+        "check": "node --check electron-main.cjs && node --check preload.cjs && node --check ui/app.js"
+    },
+    "devDependencies": {
+        "electron": "42.0.0",
+        "prettier": "^3.9.10"
+    },
+    "license": "Apache-2.0"
+}

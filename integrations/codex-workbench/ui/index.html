@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Drawio · Codex 工作台</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="appbar">
+      <div class="brand">
+        <button
+          id="toggle-recents"
+          class="icon-btn"
+          title="显示或收起最近对话"
+          aria-label="显示或收起最近对话"
+          aria-expanded="true"
+        >
+          ☰
+        </button>
+        <span class="brand-icon">▥</span><strong>Drawio</strong
+        ><span class="brand-separator">/</span><span>Codex 工作台</span>
+      </div>
+      <div class="file-tools">
+        <button id="open-file" title="打开 .drawio 图纸">打开图纸</button
+        ><button id="save-file" title="另存为 .drawio 文件">另存为</button
+        ><span class="save-state" id="save-state">自动保存</span>
+      </div>
+    </header>
+    <main id="layout">
+      <nav id="recents-nav" class="recents-nav" aria-label="最近对话">
+        <div class="recents-heading">
+          <strong>最近对话</strong
+          ><button
+            id="collapse-recents"
+            class="icon-btn"
+            title="收起最近对话"
+            aria-label="收起最近对话"
+          >
+            ‹
+          </button>
+        </div>
+        <button id="recent-new-chat" class="recent-new-chat">＋ 新对话</button>
+        <input
+          id="recent-search"
+          type="search"
+          placeholder="搜索最近对话…"
+          aria-label="搜索最近对话"
+        />
+        <div class="recents-filter">
+          <label for="recent-scope">范围</label
+          ><select id="recent-scope" aria-label="最近对话范围">
+            <option value="all">全部项目</option>
+            <option value="project">当前项目</option></select
+          ><button
+            id="recent-refresh"
+            class="icon-btn"
+            title="刷新最近对话"
+            aria-label="刷新最近对话"
+          >
+            ↻
+          </button>
+        </div>
+        <div id="recent-thread-list" class="recent-thread-list"></div>
+        <button id="recent-load-more" class="recent-load-more" hidden>
+          更多对话
+        </button>
+      </nav>
+      <section class="canvas-pane">
+        <div class="canvas-label">
+          <span class="file-icon">▱</span
+          ><span id="drawing-name">未命名.drawio</span
+          ><span class="hint">可直接拖动和编辑图形</span>
+        </div>
+        <div id="conflict" hidden>
+          图纸在另一处更新了。<button id="reload-canvas">载入外部修改</button
+          ><button id="keep-copy">保留当前副本</button>
+        </div>
+        <iframe
+          id="editor"
+          title="draw.io 绘图画布"
+          src="/drawio/index.html?embed=1&amp;proto=json&amp;configure=1&amp;ui=simple&amp;spin=0&amp;libraries=0&amp;noSaveBtn=1&amp;noExitBtn=1&amp;dark=1&amp;lang=zh&amp;offline=1"
+        ></iframe>
+      </section>
+      <hr id="resize" aria-label="调整聊天侧栏宽度" aria-orientation="vertical" />
+      <aside class="sidebar">
+        <div class="side-heading">
+          <div>
+            <strong>Codex</strong
+            ><span class="connection"
+              ><i></i><span id="connection">正在连接</span></span
+            >
+          </div>
+          <button id="refresh" class="icon-btn" title="刷新会话">↻</button>
+        </div>
+        <button id="project" class="project-button" title="选择项目文件夹">
+          <span>⌑</span><span id="project-name">本地项目</span
+          ><span class="muted">⌄</span>
+        </button>
+        <div class="conversation-bar">
+          <button id="conversation" title="切换 Codex 对话">
+            <span id="conversation-name">选择对话</span><span>⌄</span></button
+          ><button id="new-chat" class="icon-btn" title="新建 Codex 对话">
+            ＋
+          </button>
+        </div>
+        <div id="picker" class="picker" hidden>
+          <div class="picker-top">
+            <input
+              id="search"
+              placeholder="搜索对话或项目…"
+              aria-label="搜索 Codex 对话"
+            /><label
+              ><input
+                type="checkbox"
+                id="all-projects"
+                checked
+              />全部项目</label
+            >
+          </div>
+          <div id="thread-list"></div>
+          <button id="load-more-threads" hidden>加载更多对话</button>
+        </div>
+        <div class="chat-status">
+          <span id="chat-status">与本机 Codex 共享会话</span
+          ><span id="sync-state">每秒同步</span>
+        </div>
+        <div id="messages" class="messages">
+          <div class="empty">
+            <div class="empty-symbol">✦</div>
+            <h2>在画布旁继续对话</h2>
+            <p>选择已有的 Codex 对话，或为当前项目新建一段对话。</p>
+            <p class="muted">你手动修改的图纸也能交给 Codex 接着编辑。</p>
+          </div>
+        </div>
+        <div id="approvals"></div>
+        <form id="composer">
+          <textarea
+            id="prompt"
+            placeholder="描述你想改什么，或继续这段对话…"
+            aria-label="给 Codex 发消息"
+            rows="3"
+          ></textarea>
+          <div class="composer-footer">
+            <label title="把已保存图纸的路径附加到消息中"
+              ><input id="attach" type="checkbox" checked />附加当前图纸</label
+            >
+            <div class="send-controls">
+              <button id="stop" type="button" title="停止当前回复" hidden>
+                ■</button
+              ><button id="send" type="submit" title="发送（Enter）">↑</button>
+            </div>
+          </div>
+        </form>
+        <div class="footer-note">Enter 发送 · Shift + Enter 换行</div>
+      </aside>
+    </main>
+    <div id="toast" role="status" hidden></div>
+    <script src="app.js"></script>
+  </body>
+</html>

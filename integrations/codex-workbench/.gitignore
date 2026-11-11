@@ -1,0 +1,17 @@
+/node_modules/
+/state/
+/workspace/
+/.drawio-codex/
+/artifacts/
+**/__pycache__/
+*.py[cod]
+*.log
+*.lnk
+.env
+.env.*
+tests/*-result.json
+tests/*-summary.json
+tests/*-verification.json
+tests/*.png
+tests/*.jpg
+tests/*.drawio
